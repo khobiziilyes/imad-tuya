@@ -1,16 +1,17 @@
 {
-  "name": "imad-tuya",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "tuyapi": "^7.7.0"
-  }
+	"name": "imad-tuya",
+	"type": "module",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "node index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@tuya/tuya-connector-nodejs": "^2.1.2",
+		"tuyapi": "^7.7.0"
+	}
 }
