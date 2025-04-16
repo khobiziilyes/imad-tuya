@@ -12,6 +12,15 @@ async function switchLed(device_id, value) {
 	console.log("Executed command:", commands);
 }
 
+async function getLed(device_id) {
+	const commands = await tuya
+		.request({
+			path: `/v2.0/cloud/thing/${device_id}/shadow/properties?codes=switch_led`,
+			method: "GET",
+		})
+		.then(res => res.result.properties[0].value);
+}
+
 const tuya = new TuyaContext({
 	baseUrl: "https://openapi.tuyaeu.com",
 	accessKey: "5qaj8wgkmmptrhdp8jrc",
@@ -27,4 +36,5 @@ const {
 	result: { id: device_id },
 } = device;
 
-switchLed(device_id, true);
+// switchLed(device_id, true);
+getLed(device_id);
