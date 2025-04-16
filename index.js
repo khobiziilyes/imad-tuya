@@ -1,11 +1,11 @@
 import { TuyaContext } from "@tuya/tuya-connector-nodejs";
 
-async function switchLed(device_id, value) {
+async function setLed(device_id, value) {
 	const commands = await tuya.request({
 		path: `/v2.0/cloud/thing/${device_id}/shadow/properties/issue`,
 		method: "POST",
 		body: {
-			properties: JSON.stringify({ switch_led: true }),
+			properties: JSON.stringify({ switch_led: value }),
 		},
 	});
 
@@ -13,12 +13,17 @@ async function switchLed(device_id, value) {
 }
 
 async function getLed(device_id) {
-	const commands = await tuya
+	return await tuya
 		.request({
 			path: `/v2.0/cloud/thing/${device_id}/shadow/properties?codes=switch_led`,
 			method: "GET",
 		})
 		.then(res => res.result.properties[0].value);
+}
+
+async function switchLed(device_id) {
+	const currVal = await getLed(device_id);
+	await setLed(device_id, !currVal);
 }
 
 const tuya = new TuyaContext({
@@ -36,5 +41,6 @@ const {
 	result: { id: device_id },
 } = device;
 
-// switchLed(device_id, true);
-getLed(device_id);
+console.log("Device ID:", device_id);
+
+await switchLed(device_id);
