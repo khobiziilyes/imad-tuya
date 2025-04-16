@@ -1,5 +1,17 @@
 import { TuyaContext } from "@tuya/tuya-connector-nodejs";
 
+async function switchLed(device_id, value) {
+	const commands = await tuya.request({
+		path: `/v2.0/cloud/thing/${device_id}/shadow/properties/issue`,
+		method: "POST",
+		body: {
+			properties: JSON.stringify({ switch_led: true }),
+		},
+	});
+
+	console.log("Executed command:", commands);
+}
+
 const tuya = new TuyaContext({
 	baseUrl: "https://openapi.tuyaeu.com",
 	accessKey: "5qaj8wgkmmptrhdp8jrc",
@@ -8,7 +20,11 @@ const tuya = new TuyaContext({
 });
 
 const device = await tuya.device.detail({
-	device_id: "bf9ae1783ac42d4fd1ubpu",
+	device_id: "bf3cf2aea410b79b46hqvt",
 });
 
-tuya.device.console.log(device);
+const {
+	result: { id: device_id },
+} = device;
+
+switchLed(device_id, true);
